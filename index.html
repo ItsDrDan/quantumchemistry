@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantum Chemistry Quest • CHEM 1A • Dr. Dan</title>
+<style>
+:root{--ink:#2d2a4a;--bg:#f3f0ff;--card:#fff;--line:#d9d2f5;--a:#7c6cf0;--ok:#3fb68b;--bad:#e8718d;--sun:#ffe9a8}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(#f3f0ff,#e6f6ff);color:var(--ink);font:18px/1.5 "Trebuchet MS",Verdana,sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:16px}
+h1{margin:.2em 0 0;font-size:2rem}.sub{margin:0 0 12px;opacity:.75}
+.card{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:14px 16px;margin:12px 0}
+summary{cursor:pointer;font-weight:700;font-size:1.1rem}
+#modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+.m{min-height:56px;border:3px solid transparent;border-radius:16px;font:inherit;font-weight:700;color:var(--ink);cursor:pointer}
+.m.on{border-color:var(--a);box-shadow:0 0 0 3px #fff inset}
+.lab{font-weight:700;color:var(--a)}
+#dir{background:var(--sun);border-radius:12px;padding:8px 12px;margin:8px 0}
+#qt{font-size:1.3rem;margin:8px 0 12px}
+input{font:inherit;font-size:1.2rem;padding:10px 12px;border:2px solid var(--line);border-radius:12px;width:min(100%,360px)}
+button{font:inherit}
+.b{min-height:48px;padding:8px 18px;margin:6px 6px 0 0;border:0;border-radius:14px;background:var(--a);color:#fff;font-weight:700;cursor:pointer}
+.b.alt{background:#e4defa;color:var(--ink)}
+.o{display:block;width:100%;text-align:left;min-height:52px;margin:8px 0;padding:10px 14px;border:2px solid var(--line);border-radius:14px;background:#faf8ff;color:var(--ink);cursor:pointer}
+.o.x{background:#fde4ea;border-color:var(--bad)}.o.y{background:#dff6ec;border-color:var(--ok)}
+#fb{margin-top:10px;border-radius:14px;padding:0}
+#fb.g,#fb.w,#fb.h{padding:10px 14px}
+#fb.g{background:#dff6ec;border:2px solid var(--ok)}#fb.w{background:#fde4ea;border:2px solid var(--bad)}#fb.h{background:#eef3ff;border:2px solid #9db4ff}
+#nx{display:none;width:100%;font-size:1.3rem;min-height:60px;background:var(--ok)}
+.stats{display:flex;gap:16px;flex-wrap:wrap;font-weight:700}
+.ach{display:inline-block;margin:4px;padding:6px 12px;border-radius:12px;background:#dff6ec}
+.ach.lock{background:#eee;opacity:.55}
+#pop{position:fixed;left:50%;top:30%;transform:translateX(-50%);font-size:2.2rem;font-weight:700;pointer-events:none;opacity:0;text-align:center}
+#pop.go{animation:pp 1.6s ease-out}
+@keyframes pp{0%{opacity:1;transform:translate(-50%,20px) scale(.6)}30%{transform:translate(-50%,0) scale(1.15)}100%{opacity:0;transform:translate(-50%,-70px)}}
+@media(prefers-reduced-motion:reduce){#pop.go{animation:none;opacity:1}}
+@media(max-width:520px){body{font-size:16px}h1{font-size:1.6rem}}
+sup,sub{line-height:0}
+</style></head><body><div class="wrap">
+<h1>⚛️ Quantum Chemistry Quest</h1>
+<p class="sub">CHEM 1A • OpenStax Chemistry 2e Chapter 6 • Lectures 19 &amp; 21</p>
+<details class="card" open><summary>Quick start</summary>
+<ol><li>Pick a mode below.</li><li>Read <b>Your question</b>, type an answer (E notation like 6.4E14 works), and press <b>Check</b>.</li><li>Hints are free. <b>Show answer</b> teaches you, but that problem earns no XP.</li></ol>
+<p>Answers within 2% are accepted. Constants come from the yellow sheet.</p></details>
+<div id="modes"></div>
+<div class="card"><div class="lab">Your question</div><div id="dir"></div><div id="qt"></div><div id="ans"></div>
+<div id="bt"><button class="b" id="ck">Check</button><button class="b alt" id="hn">Hint</button><button class="b alt" id="sa">Show answer</button><button class="b alt" id="nw">New question</button></div>
+<div id="fb" role="status" aria-live="polite"></div><button class="b" id="nx">Next question ▶</button></div>
+<details class="card"><summary>Reference</summary>
+<p><b>Constants (yellow sheet):</b> c = 2.9979×10<sup>8</sup> m/s &nbsp; h = 6.6262×10<sup>−34</sup> J·s &nbsp; hydrogen: E<sub>n</sub> = −2.178×10<sup>−18</sup> J ÷ n²</p>
+<p><b>Light:</b> c = λν &nbsp; E = hν = hc/λ &nbsp; (nm → m: ×10<sup>−9</sup>)<br><b>Photoelectric:</b> KE = hν − Φ, threshold ν<sub>0</sub> = Φ/h<br><b>Bohr:</b> ΔE = 2.178×10<sup>−18</sup>(1/n<sub>f</sub>² − 1/n<sub>i</sub>²) J; falling to lower n emits a photon</p>
+<p><b>Quantum numbers:</b> n = 1, 2, 3…; l = 0 to n−1 (s, p, d, f); m<sub>l</sub> = −l to +l; m<sub>s</sub> = +½ or −½. A subshell has 2l+1 orbitals; a shell holds 2n² electrons.</p>
+<p><b>Filling order:</b> 1s 2s 2p 3s 3p 4s 3d 4p. Pauli: max 2 e⁻ per orbital. Hund: fill orbitals singly first. Exceptions: Cr = [Ar]4s<sup>1</sup>3d<sup>5</sup>, Cu = [Ar]4s<sup>1</sup>3d<sup>10</sup>. Cations lose the highest-n electrons first (4s before 3d).</p>
+<p><b>Trends:</b> across a period radius ↓, IE ↑, EA more negative; down a group radius ↑, IE ↓. Cations are smaller than their atoms; anions are larger.</p></details>
+<details class="card" open><summary>XP &amp; achievements</summary>
+<div class="stats"><span id="xp"></span><span id="st"></span><span id="ct"></span></div><div id="ac"></div>
+<p><button class="b alt" id="rs">Reset progress</button></p></details></div>
+<div id="pop"></div>
+<script>
+const $=id=>document.getElementById(id),R=(a,b)=>a+Math.random()*(b-a),RI=(a,b)=>Math.floor(R(a,b+1)),pick=a=>a[RI(0,a.length-1)],shuf=a=>a.map(x=>[Math.random(),x]).sort((p,q)=>p[0]-q[0]).map(x=>x[1]);
+const c=2.9979e8,h=6.6262e-34,RH=2.178e-18,L='spdf';
+const sci=x=>{const e=Math.floor(Math.log10(Math.abs(x)));return((x/10**e).toFixed(3)+' × 10<sup>'+e+'</sup>').replace(/-/g,'−')};
+const num=(t,a,u,sol,hint,tol=.02)=>({k:'num',t,a,u,sol,hint,tol});
+const mc=(t,o,right,sol,hint)=>{o=shuf(o);return{k:'mc',t,o,a:o.indexOf(right),sol,hint}};
+function gLight(){const t=RI(0,3);
+if(t==0){const l=RI(300,750),v=c/(l*1e-9);return num(`Light has a wavelength of <b>${l} nm</b>. What is its frequency (s<sup>−1</sup>)?`,v,'s⁻¹',`ν = c/λ = (${sci(c)} m/s) ÷ (${l}×10<sup>−9</sup> m) = <b>${sci(v)} s<sup>−1</sup></b>`,'Convert nm to m, then ν = c/λ.')}
+if(t==1){const f=Math.round(R(4,9)*100)/100,v=f*1e14,l=c/v*1e9;return num(`Light has a frequency of <b>${f} × 10<sup>14</sup> s<sup>−1</sup></b>. What is its wavelength (nm)?`,l,'nm',`λ = c/ν = ${sci(c)} ÷ ${sci(v)} = ${sci(l*1e-9)} m = <b>${l.toFixed(1)} nm</b>`,'λ = c/ν gives meters. Multiply by 10⁹ for nm.')}
+if(t==2){const l=RI(200,700),E=h*c/(l*1e-9);return num(`What is the energy of one photon of <b>${l} nm</b> light (J)?`,E,'J',`E = hc/λ = (${sci(h)})(${sci(c)}) ÷ (${l}×10<sup>−9</sup> m) = <b>${sci(E)} J</b>`,'E = hν = hc/λ. Use λ in meters.')}
+const e=Math.round(R(2,9)*10)/10,E=e*1e-19,l=h*c/E*1e9;return num(`A photon has energy <b>${e} × 10<sup>−19</sup> J</b>. What is its wavelength (nm)?`,l,'nm',`λ = hc/E = (${sci(h)})(${sci(c)}) ÷ (${e}×10<sup>−19</sup> J) = ${sci(l*1e-9)} m = <b>${l.toFixed(1)} nm</b>`,'Rearrange E = hc/λ to λ = hc/E.')}
+function gBohr(){const t=RI(0,2);
+if(t==0){const n=RI(1,6),E=-RH/n/n;return num(`What is the energy of the electron in a hydrogen atom at <b>n = ${n}</b> (J)?`,E,'J',`E<sub>n</sub> = −${sci(RH)} ÷ n² = −${sci(RH)} ÷ ${n*n} = <b>${sci(E)} J</b>`,'E = −2.178×10⁻¹⁸ J ÷ n². The answer is negative.')}
+if(t==1){const ni=RI(3,6),nf=RI(1,ni-1),E=RH*(1/nf**2-1/ni**2),l=h*c/E*1e9;return num(`An electron in hydrogen falls from <b>n = ${ni}</b> to <b>n = ${nf}</b>. What is the wavelength of the emitted photon (nm)?`,l,'nm',`|ΔE| = ${sci(RH)}(1/${nf}² − 1/${ni}²) = ${sci(E)} J<br>λ = hc/|ΔE| = ${sci(l*1e-9)} m = <b>${l.toFixed(1)} nm</b>`,'Find |ΔE| from the two energy levels, then λ = hc/ΔE.')}
+let ni=RI(1,6),nf=RI(1,6);if(ni==nf)nf=ni%6+1;const em=nf<ni;
+return mc(`A hydrogen electron goes from <b>n = ${ni}</b> to <b>n = ${nf}</b>. Is a photon emitted or absorbed?`,['Emitted','Absorbed'],em?'Emitted':'Absorbed',`Going ${em?'down':'up'} in energy level means the atom ${em?'releases':'takes in'} energy: <b>${em?'emitted':'absorbed'}</b>.`,'Lower n means lower energy. Dropping down releases energy.')}
+function gPhoto(){const t=RI(0,2),Wd=R(2.5,6.5).toFixed(2),W=+Wd*1e-19,l0=h*c/W*1e9;
+if(t==0){return num(`Metal X has a work function Φ = <b>${Wd} × 10<sup>−19</sup> J</b>. What is its threshold frequency (s<sup>−1</sup>)?`,W/h,'s⁻¹',`ν<sub>0</sub> = Φ/h = ${Wd}×10<sup>−19</sup> ÷ ${sci(h)} = <b>${sci(W/h)} s<sup>−1</sup></b>`,'At threshold, hν<sub>0</sub> = Φ.')}
+if(t==1){const ej=Math.random()<.5,l=Math.round(l0*(ej?R(.55,.9):R(1.1,1.5)));return mc(`Metal X has Φ = <b>${Wd} × 10<sup>−19</sup> J</b>. Light of wavelength <b>${l} nm</b> shines on it. Are electrons ejected?`,['Yes, electrons are ejected','No, no electrons are ejected'],ej?'Yes, electrons are ejected':'No, no electrons are ejected',`Threshold λ = hc/Φ = ${l0.toFixed(0)} nm. Light of ${l} nm is ${l<l0?'shorter, so its photons have enough energy: <b>yes</b>':'longer, so its photons lack enough energy: <b>no</b>'}.`,'Compare the photon energy hc/λ with Φ. Or compare λ to the threshold wavelength.')}
+const l=Math.round(l0*R(.55,.85)),E=h*c/(l*1e-9);return num(`Metal X has Φ = <b>${Wd} × 10<sup>−19</sup> J</b>. Light of <b>${l} nm</b> hits it. What is the kinetic energy of an ejected electron (J)?`,E-W,'J',`E<sub>photon</sub> = hc/λ = ${sci(E)} J<br>KE = E<sub>photon</sub> − Φ = ${sci(E)} − ${Wd}×10<sup>−19</sup> = <b>${sci(E-W)} J</b>`,'KE = photon energy − work function.')}
+const fm=(n,l,m,s)=>`(${n}, ${l}, ${m>0?'+'+m:String(m).replace('-','−')}, ${s})`;
+function gQN(){const t=RI(0,3);
+if(t==0){const n=RI(2,4),l=RI(1,n-1);return num(`How many orbitals are in the <b>${n}${L[l]}</b> subshell?`,2*l+1,'orbitals',`A subshell with l = ${l} has 2l + 1 = <b>${2*l+1}</b> orbitals.`,'Number of orbitals = 2l + 1.',0)}
+if(t==1){const n=RI(1,5);return num(`What is the maximum number of electrons in the shell with <b>n = ${n}</b>?`,2*n*n,'electrons',`The shell holds 2n² = 2(${n})² = <b>${2*n*n}</b> electrons.`,'Maximum electrons = 2n².',0)}
+if(t==2){const n=RI(2,4),l=RI(0,n-1),r=n+L[l];let o=new Set([r]);while(o.size<4){const a=RI(1,4),b=RI(0,Math.min(3,a-1)+ (Math.random()<.3?1:0));o.add(a+L[Math.min(b,3)])}
+return mc(`Which subshell has <b>n = ${n}</b> and <b>l = ${l}</b>?`,[...o].slice(0,4).includes(r)?[...o].slice(0,4):[r,...[...o].slice(1,4)],r,`n = ${n} gives the number; l = ${l} is the letter ${L[l]}. Answer: <b>${r}</b>.`,'l = 0, 1, 2, 3 are s, p, d, f.')}
+const good=()=>{const n=RI(1,4),l=RI(0,n-1);return[n,l,RI(-l,l),pick(['+½','−½'])]};
+const bad=k=>{let[n,l,m,s]=good();if(k==0){l=n+RI(0,1);m=0}if(k==1){m=l+RI(1,2)}if(k==2){s=pick(['0','+1','+1½'])}if(k==3){n=0;l=0;m=0}
+return[fm(n,l,m,s),['l must be less than n.','m<sub>l</sub> must be between −l and +l.','m<sub>s</sub> must be +½ or −½.','n must be 1 or greater.'][k]]};
+const g=good(),gs=fm(...g),ks=shuf([0,1,2,3]).slice(0,3),bs=ks.map(bad);
+return mc(`Which set of quantum numbers (n, l, m<sub>l</sub>, m<sub>s</sub>) is <b>allowed</b>?`,[gs,...bs.map(b=>b[0])],gs,`<b>${gs}</b> follows every rule.<br>`+bs.map(b=>`${b[0]}: ${b[1]}`).join('<br>'),'Check each set: l &lt; n, |m<sub>l</sub>| ≤ l, m<sub>s</sub> = ±½.')}
+const SYM='H He Li Be B C N O F Ne Na Mg Al Si P S Cl Ar K Ca Sc Ti V Cr Mn Fe Co Ni Cu Zn Ga Ge As Se Br Kr'.split(' '),ORD=['1s','2s','2p','3s','3p','4s','3d','4p'],NG={He:2,Ne:10,Ar:18};
+const cap=s=>({s:2,p:6,d:10})[s[1]];
+function cfg(z){const o={};let r=z;for(const s of ORD){const k=Math.min(r,cap(s));if(k>0)o[s]=k;r-=k;if(!r)break}if(z==24){o['4s']=1;o['3d']=5}if(z==29){o['4s']=1;o['3d']=10}return o}
+function ionCfg(z,q){if(q<0)return cfg(z-q);const o=cfg(z);for(let i=0;i<q;i++){const k=Object.keys(o).sort((a,b)=>(b[0]-a[0])||(L.indexOf(b[1])-L.indexOf(a[1])))[0];if(!--o[k])delete o[k]}return o}
+const fc=o=>ORD.filter(s=>o[s]).map(s=>`${s}<sup>${o[s]}</sup>`).join(' '),same=(a,b)=>Object.keys(a).length==Object.keys(b).length&&Object.keys(a).every(k=>a[k]==b[k]);
+function parseCfg(s){s=s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹]/g,m=>'⁰¹²³⁴⁵⁶⁷⁸⁹'.indexOf(m)).replace(/\^/g,'').replace(/\s+/g,'');const o={},m=s.match(/^\[(He|Ne|Ar)\]/);if(m){Object.assign(o,cfg(NG[m[1]]));s=s.slice(m[0].length)}
+const re=/(\d[spdf])(\d+)/g;let x,u='';while(x=re.exec(s)){o[x[1]]=(o[x[1]]||0)+ +x[2];u+=x[0]}return u===s?o:null}
+const unp=o=>Object.keys(o).reduce((t,s)=>{const n=2*L.indexOf(s[1])+1,e=o[s];return t+(e<=n?e:2*n-e)},0);
+const IONS=[[11,1],[12,2],[13,3],[8,-2],[9,-1],[17,-1],[16,-2],[7,-3],[19,1],[20,2],[26,2],[26,3],[29,1],[29,2],[30,2],[24,3]];
+const chg=q=>q>0?(q>1?q:'')+'+':(q<-1?-q:'')+'−';
+function gCfg(){const t=RI(0,2),z=RI(3,36),s=SYM[z-1];
+if(t==0)return{k:'cfg',t:`Write the ground-state electron configuration of <b>${s}</b> (Z = ${z}).<br><small>Example: 1s2 2s2 2p6. Shorthand like [Ne]3s2 works too.</small>`,a:cfg(z),sol:`<b>${fc(cfg(z))}</b>${z==24||z==29?'<br>This is an exception: a half-filled or filled 3d subshell is extra stable.':''}`,hint:'Fill in order: 1s 2s 2p 3s 3p 4s 3d 4p. s holds 2, p holds 6, d holds 10. Watch Cr and Cu.'};
+if(t==1)return num(`How many unpaired electrons are in a ground-state atom of <b>${s}</b> (Z = ${z})?`,unp(cfg(z)),'unpaired e⁻',`${fc(cfg(z))}<br>Hund's rule puts one electron in each orbital before pairing: <b>${unp(cfg(z))}</b> unpaired.`,'Write the configuration first, then spread the last subshell\'s electrons over its orbitals one at a time.',0);
+const[iz,q]=pick(IONS),e=SYM[iz-1];return{k:'cfg',t:`Write the electron configuration of the <b>${e}<sup>${chg(q)}</sup></b> ion.<br><small>Example: 1s2 2s2 2p6. Shorthand like [Ar]3d6 works too.</small>`,a:ionCfg(iz,q),sol:`<b>${fc(ionCfg(iz,q))}</b><br>${q>0?'Cations lose electrons from the highest n first (4s before 3d).':'Anions gain electrons until they reach the next filled shell.'}`,hint:q>0?'Write the neutral atom, then remove electrons from the outermost shell (highest n) first.':'Add electrons to the neutral atom, continuing the filling order.'}}
+const EL={Li:[2,1],Be:[2,2],B:[2,3],C:[2,4],N:[2,5],O:[2,6],F:[2,7],Na:[3,1],Mg:[3,2],Al:[3,3],Si:[3,4],P:[3,5],S:[3,6],Cl:[3,7],K:[4,1],Ca:[4,2],Br:[4,7],Rb:[5,1],Sr:[5,2],I:[5,7]};
+const ion=(s,q)=>`${s}<sup>${chg(q)}</sup>`;
+function gTrend(){const t=RI(0,3),ks=Object.keys(EL);
+if(t==3){const[s,q]=pick([['Na',1],['Mg',2],['Al',3],['K',1],['Ca',2],['Li',1],['Cl',-1],['O',-2],['F',-1],['Br',-1],['S',-2]]);const cat=q>0;
+return mc(`Which is larger: <b>${s}</b> or <b>${ion(s,q)}</b>?`,[s+' atom',ion(s,q)+' ion'],cat?s+' atom':ion(s,q)+' ion',cat?`The cation lost its outer electrons and has fewer shells, so the <b>${s} atom</b> is larger.`:`The anion gained electrons, which repel each other more, so the <b>${ion(s,q)} ion</b> is larger.`,'Cations shrink; anions grow.')}
+if(t==2){const m=pick(ks.filter(k=>EL[k][1]<3)),x=pick(ks.filter(k=>EL[k][1]==7)),sw=Math.random()<.5,[a,b]=sw?[x,m]:[m,x];
+return mc(`Which has the more negative (more favorable) electron affinity: <b>${a}</b> or <b>${b}</b>?`,[a,b],x,`<b>${x}</b> is a halogen. It is one electron short of a filled shell, so it gains an electron readily. ${m} is a metal and does not want extra electrons.`,'Halogens attract electrons strongly. Metals do not.')}
+let p;do{const a=pick(ks),b=pick(ks),A=EL[a],B=EL[b];if(a!=b&&((A[1]==B[1]&&A[0]!=B[0])||(A[0]==B[0]&&Math.abs(A[1]-B[1])>=4))){p=[a,b];break}}while(1);
+const[a,b]=p,A=EL[a],B=EL[b],grp=A[1]==B[1],big=t==0?(grp?(A[0]>B[0]?a:b):(A[1]<B[1]?a:b)):(grp?(A[0]<B[0]?a:b):(A[1]>B[1]?a:b));
+const why=t==0?(grp?'Radius increases down a group (more shells).':'Radius decreases across a period (higher Z<sub>eff</sub> pulls electrons in).'):(grp?'Ionization energy decreases down a group (outer electrons are farther away).':'Ionization energy increases across a period (higher Z<sub>eff</sub>).');
+return mc(`Which has the ${t==0?'larger atomic radius':'higher first ionization energy'}: <b>${a}</b> or <b>${b}</b>?`,[a,b],big,`<b>${big}</b>. ${why}`,grp?'Same group: compare how many shells each atom has.':'Same period: compare nuclear charge pulling on the same shell.')}
+const MODES={light:{n:'🌈 Light & Photons',xp:20,g:gLight,d:'Use c = λν and E = hν. Watch your units (nm → m).'},bohr:{n:'🔵 Bohr & Spectra',xp:30,g:gBohr,d:'Hydrogen energy levels: E = −2.178×10⁻¹⁸ J ÷ n². Dropping down emits light.'},photo:{n:'💡 Photoelectric Effect',xp:30,g:gPhoto,d:'A photon must carry at least Φ to eject an electron. Extra energy becomes kinetic energy.'},qn:{n:'🔢 Quantum Numbers',xp:20,g:gQN,d:'Apply the rules for n, l, m<sub>l</sub>, and m<sub>s</sub>.'},cfg:{n:'🧱 Electron Configs',xp:30,g:gCfg,d:'Type each subshell with its electron count, like 1s2 2s2 2p4.'},trend:{n:'📈 Periodic Trends',xp:20,g:gTrend,d:'Think about shells, nuclear charge, and shielding.'}};
+const K='qchem1a_v1';let S={xp:0,streak:0,best:0,n:0,ok:{}};try{S=Object.assign(S,JSON.parse(localStorage.getItem(K)||'{}'))}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const ACH=[['⚛️','First Photon','Get 1 problem right',s=>s.n>=1],['🔥','On a Roll','Get 5 in a row',s=>s.best>=5],['🚀','Quantum Leap','Earn 100 XP',s=>s.xp>=100],['🧭','Explorer','Get a problem right in every mode',s=>Object.keys(MODES).every(k=>s.ok[k]>0)],['🏆','Orbital Master','Earn 500 XP',s=>s.xp>=500]];
+const COL={light:'#ffd6e0',bohr:'#cfe8ff',photo:'#fff0b8',qn:'#d9f3e4',cfg:'#e5dcff',trend:'#ffe0c7'};
+let M='light',Q,done=0,help=0;
+function stats(){$('xp').textContent=`⭐ ${S.xp} XP (level ${Math.floor(S.xp/100)+1})`;$('st').textContent=`🔥 Streak ${S.streak} (best ${S.best})`;$('ct').textContent=`✅ ${S.n} correct`;
+$('ac').innerHTML=ACH.map(a=>`<span class="ach ${a[3](S)?'':'lock'}" title="${a[2]}">${a[0]} ${a[1]} — ${a[2]}</span>`).join('')}
+function modes(){$('modes').innerHTML='';for(const k in MODES){const b=document.createElement('button');b.className='m'+(k==M?' on':'');b.style.background=COL[k];b.innerHTML=MODES[k].n;b.onclick=()=>{M=k;modes();nq()};$('modes').append(b)}}
+function nq(){Q=MODES[M].g();done=0;help=0;$('dir').innerHTML=MODES[M].d;$('qt').innerHTML=Q.t;$('fb').className='';$('fb').innerHTML='';$('nx').style.display='none';$('bt').style.display='';$('ck').style.display=Q.k=='mc'?'none':'';
+if(Q.k=='mc'){$('ans').innerHTML='';Q.o.forEach((o,i)=>{const b=document.createElement('button');b.className='o';b.innerHTML=o;b.onclick=()=>chk(i,b);$('ans').append(b)})}
+else{$('ans').innerHTML=`<input id="in" autocomplete="off" aria-label="Your answer" placeholder="${Q.k=='cfg'?'1s2 2s2 …':'your answer'}"> <b>${Q.u||''}</b>`;$('in').onkeydown=e=>{if(e.key=='Enter')chk()}}}
+function pn(s){s=s.trim().replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹⁻]/g,m=>'0123456789-'['⁰¹²³⁴⁵⁶⁷⁸⁹⁻'.indexOf(m)]).replace(/\s/g,'').replace(/[−–]/g,'-').replace(/(?:×|x|\*)10\^?/i,'e');const n=Number(s);return s&&isFinite(n)?n:null}
+function fb(cls,html){$('fb').className=cls;$('fb').innerHTML=html}
+function chk(i,btn){if(done)return;let ok;
+if(Q.k=='mc')ok=i===Q.a;else{const v=$('in').value;if(!v.trim()){fb('h','Type an answer first.');return}
+if(Q.k=='cfg'){const p=parseCfg(v);ok=!!p&&same(p,Q.a)}else{const x=pn(v);ok=x!==null&&(Q.tol?Math.abs(x-Q.a)<=Math.abs(Q.a)*Q.tol:x===Q.a)}}
+if(ok){done=1;if(btn)btn.classList.add('y');const base=MODES[M].xp;let msg;
+if(help){S.streak=0;msg='Solved with help, so no XP this time. Try the next one on your own!'}
+else{const dbl=Math.random()<.2,g=base*(dbl?2:1);S.xp+=g;S.streak++;S.best=Math.max(S.best,S.streak);S.n++;S.ok[M]=(S.ok[M]||0)+1;msg=`${pick(['🎉 Excellent!','✨ Nicely done!','🚀 Quantum leap!','🌈 You got it!','⚛️ Spot on!'])} +${g} XP${dbl?' 🎈 DOUBLE XP!':''}`;pop(dbl?'🎈 DOUBLE XP! 🎆':pick(['🎉','✨','🚀','🌈','⚛️']))}
+save();stats();fb('g',`${msg}<br>${Q.sol}`);fin()}
+else{if(btn)btn.classList.add('x');S.streak=0;save();stats();fb('w',Q.k=='mc'?'Not quite. Pick another answer, or press Hint.':'Not quite. Check your units and rounding, or press Hint.')}}
+function fin(){$('bt').style.display='none';$('nx').style.display='block';if(Q.k=='mc')[...$('ans').children].forEach((b,i)=>{if(i==Q.a)b.classList.add('y')})}
+function pop(t){const p=$('pop');p.textContent=t;p.className='';void p.offsetWidth;p.className='go'}
+$('ck').onclick=()=>chk();$('hn').onclick=()=>{help=1;fb('h','💡 '+Q.hint+'<br><small>Hints are free.</small>');help=help&&0};
+$('sa').onclick=()=>{if(done)return;help=1;done=1;S.streak=0;save();stats();fb('h','<b>Answer:</b><br>'+Q.sol+'<br><small>No XP for this one. Try the next question on your own.</small>');fin()};
+$('nw').onclick=nq;$('nx').onclick=nq;
+$('rs').onclick=()=>{if(confirm('Reset all XP and achievements?')){S={xp:0,streak:0,best:0,n:0,ok:{}};save();stats()}};
+modes();stats();nq();
+</script></body></html>
