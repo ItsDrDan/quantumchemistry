@@ -610,6 +610,34 @@ const v8BaseDiagram=renderQuestionDiagram;renderQuestionDiagram=function(){v8Bas
 })();
 
 
+// ===== v9 diagram fixes: replace generic or answer-revealing pictures with problem-specific ones =====
+function hLadder(opts={}){const top=48,bot=420,y=n=>top+(bot-top)*(1/n);let c=`<path d="M70 ${bot+12}V26" stroke="#6375a0" stroke-width="2" marker-end="url(#quantumArrow)"/>`+svgText(18,22,'Energy','font-size="15"');
+ c+=`<path d="M150 ${top-14}H600" stroke="#9aa9c2" stroke-dasharray="6 5"/>`+svgText(612,top-10,'E = 0 (n = ∞)','font-size="14"');
+ for(let n=1;n<=7;n++){const yy=y(n),hi=(opts.highlight||[]).includes(n);c+=`<path d="M150 ${yy}H600" stroke="${hi?'#4e64b3':'#b3c1d6'}" stroke-width="${hi?3.5:2}"/>`;if(n<=5)c+=svgText(612,yy+5,'n = '+n,`font-size="16"${hi?' font-weight="700"':''}`);}
+ c+=svgText(612,y(7)-2,'n = 6, 7 …','font-size="13"');
+ c+=svgText(375,bot+44,opts.note||'Schematic: levels crowd together as n grows (E ∝ −1/n²).','text-anchor="middle" font-size="15"');
+ return quantumSvg(c,'Hydrogen energy levels drawn to scale with no transition marked.',760,bot+64);}
+function tofGraphic(q){const m=q.q.match(/([\d.]+) m flight tube/),L=m?m[1]:'L';let c='<circle cx="70" cy="120" r="16" fill="#adbee5" stroke="#7f96bc"/>'+svgText(70,126,'e⁻','text-anchor="middle" font-size="15"')+svgText(70,165,'source','text-anchor="middle" font-size="14"');
+ c+='<rect x="120" y="92" width="500" height="56" rx="28" fill="#eef2fc" stroke="#9fb3d4" stroke-width="2"/><path d="M140 120H590" stroke="#6375a0" stroke-width="2" stroke-dasharray="8 6" marker-end="url(#quantumArrow)"/>';
+ c+='<rect x="636" y="82" width="34" height="76" rx="6" fill="#ffe4a0" stroke="#a37a1f"/>'+svgText(653,182,'detector','text-anchor="middle" font-size="14"');
+ c+=`<path d="M120 200H620" stroke="#6375a0" marker-start="url(#quantumArrow)" marker-end="url(#quantumArrow)"/>`+svgText(370,225,'L = '+L+' m','text-anchor="middle"')+svgText(370,262,'constant speed v  →  t = L / v','text-anchor="middle" font-size="16"');
+ return quantumSvg(c,'An electron crosses a flight tube of the given length to a detector.',760,285);}
+function freqWave(q){const m=q.q.match(/frequency of (.+?) Hz/),f=m?m[1].replace(/<sup>(.*?)<\/sup>/g,(_,e)=>[...e].map(ch=>'⁰¹²³⁴⁵⁶⁷⁸⁹'['0123456789'.indexOf(ch)]||(ch==='-'||ch==='−'?'⁻':ch)).join('')):'ν';let c=`<path d="${sinePath(230,95,480,3.5,30)}" fill="none" stroke="#7088cb" stroke-width="3"/><path d="M230 150H${230+480/3.5}" stroke="#6375a0" stroke-width="1.8" marker-start="url(#quantumArrow)" marker-end="url(#quantumArrow)"/>`+svgText(230+240/3.5,176,'λ = ?','text-anchor="middle" font-size="18"')+svgText(20,100,'ν = '+f+' Hz','font-size="16"')+svgText(400,222,'c = λν  →  λ = c / ν   (then convert m → nm)','text-anchor="middle" font-size="16"');
+ return quantumSvg(c,'Light wave with known frequency; the wavelength is unknown.',760,245);}
+function ieBars(vals,label){const max=Math.max(...vals),w=Math.min(110,560/vals.length),x=i=>110+i*(w+14);let jump=1;vals.forEach((v,i)=>{if(i&&v/vals[i-1]>vals[jump]/vals[jump-1])jump=i});let c='<path d="M90 30V290H700" stroke="#7e94b5" fill="none"/>'+svgText(20,24,'kJ/mol','font-size="14"');
+ vals.forEach((v,i)=>{const h=240*v/max;c+=`<rect x="${x(i)}" y="${290-h}" width="${w}" height="${h}" rx="5" fill="${i===jump?'#e9a6a0':'#a9bbe6'}"/>`+svgText(x(i)+w/2,282-h,v.toLocaleString('en-US'),'text-anchor="middle" font-size="13"')+svgText(x(i)+w/2,312,'IE'+(i+1),'text-anchor="middle" font-size="14"');});
+ c+=svgText(395,345,label,'text-anchor="middle" font-size="15"');return quantumSvg(c,label,760,360);}
+const beforeV9Diagrams=diagramFor;diagramFor=function(q){const t=q.q;
+ if(/^Which transition in hydrogen emits a photon/.test(t)||/^Which hydrogen-atom transition represents/.test(t)||/^In a hydrogen atom, which transition/.test(t))
+  return {title:'Hydrogen energy levels',svg:hLadder({note:/absorption/.test(t)?'Absorption = upward arrow; bigger gap = higher frequency, shorter wavelength.':'Emission = downward arrow; bigger gap = higher energy, shorter wavelength.'}),caption:'No transition is drawn. Locate each choice on the ladder and compare the gaps.'};
+ if(/large jump between the third and fourth ionization energies of aluminum/.test(t))return {title:'Successive ionization energies of Al',svg:ieBars([578,1817,2745,11577],'Al: three valence electrons (3s² 3p¹), then the Ne-like core'),caption:'The red bar marks the huge jump. Bar heights use NIST values.'};
+ if(/more exothermic first electron affinity/.test(t))return {title:'Periodic-table comparison',svg:fullPeriodicGraphic(q),caption:'Compare positions: halogens (group 17) gain an electron most readily; noble gases (group 18) and half-filled p subshells resist it.'};
+ if(/flight tube/.test(t))return {title:'Electron time of flight',svg:tofGraphic(q),caption:'Distance and speed are given; the time is what you find.'};
+ if(/^Light has a frequency of/.test(t))return {title:'Find the wavelength',svg:freqWave(q),caption:'The drawing is schematic; only the labeled frequency is given.'};
+ if(/^Build the ground-state valence orbital diagram for/.test(t))return {title:'Find the element: its row tells you the valence shell',svg:fullPeriodicGraphic(q),caption:'The highlighted element’s row number is n for its valence s and p orbitals.'};
+ return beforeV9Diagrams(q);};
+
+
 // ===== v5 course layer: CHEM 1A (default, everything) vs CHEM 3A (focused subset per the 3A COR) =====
 const TM_SYMS=new Set('Sc Ti V Cr Mn Fe Co Ni Cu Zn Y Zr Nb Mo Tc Ru Rh Pd Ag Cd La Hf Ta W Re Os Ir Pt Au Hg Ce Pr Nd Pm Sm Eu Gd Tb Dy Ho Er Tm Yb Lu Ac Th Pa U Np Pu Am Cm Bk Cf Es Fm Md No Lr'.split(' '));
 const HEAVY=new Set('Hf Ta W Re Os Ir Pt Au Hg Tl Pb Bi Po At Rn Fr Ra'.split(' '));
