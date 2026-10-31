@@ -1,0 +1,90 @@
+<svg class="qq-cat qq-logo" data-mood="idle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" role="img" aria-label="Quantum Quest logo: Schrödinger's cat in a box">
+<defs>
+<radialGradient id="qcBg" cx="40%" cy="28%" r="80%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e1e6fb"/></radialGradient>
+<linearGradient id="qcBox" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7dcae"/><stop offset="1" stop-color="#e6b06c"/></linearGradient>
+<linearGradient id="qcFur" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd29b"/><stop offset="1" stop-color="#f7b56a"/></linearGradient>
+<linearGradient id="qcGhost" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ebe7ff"/><stop offset="1" stop-color="#cfc6ff"/></linearGradient>
+<clipPath id="qcL"><rect width="80" height="160"/></clipPath><clipPath id="qcR"><rect x="80" width="80" height="160"/></clipPath>
+<clipPath id="qcBadge"><circle cx="80" cy="80" r="72"/></clipPath>
+</defs>
+<circle cx="80" cy="80" r="74" fill="url(#qcBg)" stroke="#5869bc" stroke-width="4"/>
+<g clip-path="url(#qcBadge)">
+<path d="M37 98L22 80Q21 78 24 78L80 84Z" fill="#e2a965" stroke="#a46f35" stroke-width="2.2" stroke-linejoin="round"/>
+<path d="M123 98L138 80Q139 78 136 78L80 84Z" fill="#e2a965" stroke="#a46f35" stroke-width="2.2" stroke-linejoin="round"/>
+<!-- left half: always the "observed" orange cat -->
+<g clip-path="url(#qcL)">
+ <path d="M48 99C43 82 46 64 53 54L50 32Q50 28 54 30L69 42C76 39.5 84 39.5 91 42L106 30Q110 28 110 32L107 54C114 64 117 82 112 99Z" fill="url(#qcFur)" stroke="#b5712a" stroke-width="2.6" stroke-linejoin="round"/>
+ <path d="M54 35L57 48L64 43Z" fill="#ffa3b5"/>
+ <path d="M73 47L74 54M66 49L69 55" stroke="#d98c3e" stroke-width="2.4" stroke-linecap="round"/>
+ <ellipse cx="80" cy="84" rx="13" ry="8.5" fill="#fff4e3"/>
+ <path d="M40 79L57 81M41 87L57 85" stroke="#9a6431" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+<!-- right half: dashed "probability" cat (superposition) -->
+<g clip-path="url(#qcR)" data-m="idle wrong curious peek excited">
+ <path d="M48 99C43 82 46 64 53 54L50 32Q50 28 54 30L69 42C76 39.5 84 39.5 91 42L106 30Q110 28 110 32L107 54C114 64 117 82 112 99Z" fill="url(#qcGhost)" fill-opacity=".85" stroke="#6a5fc4" stroke-width="2.6" stroke-dasharray="5 4" stroke-linejoin="round"/>
+ <path d="M106 35L103 48L96 43Z" fill="#c9bfff"/>
+ <path d="M87 47L86 54M94 49L91 55" stroke="#9d93e6" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="3 3"/>
+ <ellipse cx="80" cy="84" rx="13" ry="8.5" fill="#f4f1ff"/>
+ <path d="M103 81L120 79M103 85L119 87" stroke="#7d72d1" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 3"/>
+</g>
+<!-- right half collapsed: observed → solid orange too -->
+<g clip-path="url(#qcR)" data-m="happy star">
+ <path d="M48 99C43 82 46 64 53 54L50 32Q50 28 54 30L69 42C76 39.5 84 39.5 91 42L106 30Q110 28 110 32L107 54C114 64 117 82 112 99Z" fill="url(#qcFur)" stroke="#b5712a" stroke-width="2.6" stroke-linejoin="round"/>
+ <path d="M106 35L103 48L96 43Z" fill="#ffa3b5"/>
+ <path d="M87 47L86 54M94 49L91 55" stroke="#d98c3e" stroke-width="2.4" stroke-linecap="round"/>
+ <ellipse cx="80" cy="84" rx="13" ry="8.5" fill="#fff4e3"/>
+ <path d="M103 81L120 79M103 85L119 87" stroke="#9a6431" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+<path d="M76.5 79H83.5L80 83Z" fill="#ff8fa8" stroke="#d96b84" stroke-width="1" stroke-linejoin="round"/>
+<!-- FACES -->
+<g data-m="idle">
+ <ellipse cx="67" cy="70" rx="4.8" ry="6.2" fill="#253456"/><circle cx="68.7" cy="67.6" r="1.8" fill="#fff"/>
+ <path d="M88 71Q93 75.5 98 71" fill="none" stroke="#4b3fa6" stroke-width="2.6" stroke-linecap="round"/>
+ <path d="M80 83Q77 87.5 73.5 85.5M80 83Q83 87.5 86.5 85.5" fill="none" stroke="#7a4d2a" stroke-width="1.8" stroke-linecap="round"/>
+ <text x="112" y="53" font-family="system-ui,Arial,sans-serif" font-size="11" font-weight="700" fill="#6a5fc4">z</text><text x="119.5" y="44" font-family="system-ui,Arial,sans-serif" font-size="8" font-weight="700" fill="#6a5fc4">z</text>
+</g>
+<g data-m="happy">
+ <path d="M62 71Q67 64 72 71M88 71Q93 64 98 71" fill="none" stroke="#253456" stroke-width="2.8" stroke-linecap="round"/>
+ <path d="M73 85Q80 94 87 85Z" fill="#c2455f" stroke="#7a4d2a" stroke-width="1.6" stroke-linejoin="round"/>
+ <ellipse cx="60" cy="80" rx="5" ry="3" fill="#ff9fb1" opacity=".7"/><ellipse cx="100" cy="80" rx="5" ry="3" fill="#ff9fb1" opacity=".7"/>
+ <path d="M121 40l2 5 5 2-5 2-2 5-2-5-5-2 5-2z" fill="#ffcf5a"/>
+</g>
+<g data-m="star">
+ <path d="M67 64l1.9 4.2 4.6.5-3.4 3.1 1 4.5-4.1-2.4-4.1 2.4 1-4.5-3.4-3.1 4.6-.5z" fill="#ffc53d" stroke="#c9801e" stroke-width="1"/>
+ <path d="M93 64l1.9 4.2 4.6.5-3.4 3.1 1 4.5-4.1-2.4-4.1 2.4 1-4.5-3.4-3.1 4.6-.5z" fill="#ffc53d" stroke="#c9801e" stroke-width="1"/>
+ <path d="M72 85Q80 96 88 85Z" fill="#c2455f" stroke="#7a4d2a" stroke-width="1.6" stroke-linejoin="round"/>
+ <path d="M121 40l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM32 44l1.4 3.5 3.5 1.4-3.5 1.4L32 54l-1.4-3.5-3.5-1.4 3.5-1.4z" fill="#ffcf5a"/>
+</g>
+<g data-m="wrong">
+ <ellipse cx="67" cy="71" rx="4.6" ry="5.6" fill="#253456"/><circle cx="68.4" cy="69" r="1.6" fill="#fff"/>
+ <ellipse cx="93" cy="71" rx="4.6" ry="5.6" fill="#4b3fa6"/><circle cx="94.4" cy="69" r="1.6" fill="#fff"/>
+ <path d="M60 63L71 60M100 63L89 60" stroke="#7a4d2a" stroke-width="2" stroke-linecap="round"/>
+ <path d="M74 89Q80 84 86 89" fill="none" stroke="#7a4d2a" stroke-width="1.9" stroke-linecap="round"/>
+ <path d="M98 76q3 5 0 7q-3-2 0-7z" fill="#8fd3f4" stroke="#4a9fc8" stroke-width="1"/>
+</g>
+<g data-m="curious">
+ <ellipse cx="67" cy="70" rx="4.8" ry="6.2" fill="#253456"/><circle cx="68.6" cy="66.3" r="1.9" fill="#fff"/>
+ <ellipse cx="93" cy="70" rx="4.8" ry="6.2" fill="#4b3fa6"/><circle cx="94.6" cy="66.3" r="1.9" fill="#fff"/>
+ <path d="M75 87Q80 85 85 87" fill="none" stroke="#7a4d2a" stroke-width="1.8" stroke-linecap="round"/>
+ <text x="111" y="52" font-family="system-ui,Arial,sans-serif" font-size="17" font-weight="800" fill="#5869bc">?</text>
+</g>
+<g data-m="excited">
+ <ellipse cx="67" cy="69" rx="5.6" ry="7" fill="#253456"/><circle cx="69" cy="66.4" r="2.2" fill="#fff"/><circle cx="65.4" cy="71.6" r="1" fill="#fff"/>
+ <ellipse cx="93" cy="69" rx="5.6" ry="7" fill="#4b3fa6"/><circle cx="95" cy="66.4" r="2.2" fill="#fff"/><circle cx="91.4" cy="71.6" r="1" fill="#fff"/>
+ <path d="M73 85Q80 95 87 85Z" fill="#c2455f" stroke="#7a4d2a" stroke-width="1.6" stroke-linejoin="round"/>
+ <path d="M114 36L118 50M122 42L119 52M32 40L36 52" stroke="#ffb02e" stroke-width="2.6" stroke-linecap="round"/>
+</g>
+<g data-m="peek">
+ <path d="M62 71H72M88 71H98" stroke="#253456" stroke-width="2.8" stroke-linecap="round"/>
+ <path d="M75 87H85" stroke="#7a4d2a" stroke-width="1.8" stroke-linecap="round"/>
+ <text x="110" y="53" font-family="system-ui,Arial,sans-serif" font-size="13" font-weight="700" fill="#6a5fc4">…</text>
+</g>
+<path d="M33 98H127L121 150H39Z" fill="url(#qcBox)" stroke="#a46f35" stroke-width="2.6" stroke-linejoin="round"/>
+<path d="M33 98H127L126.2 105H33.8Z" fill="#d9a05a" opacity=".55"/>
+<path d="M70 98H90L89.4 105H70.6Z" fill="#f3e3c4" opacity=".9"/>
+<text x="80" y="134" text-anchor="middle" font-family="Georgia,'Times New Roman',serif" font-size="24" font-weight="700" fill="#6b4420">|ψ⟩</text>
+<ellipse cx="64" cy="100" rx="8" ry="5" fill="url(#qcFur)" stroke="#b5712a" stroke-width="2.2"/>
+<g data-m="idle wrong curious peek excited"><ellipse cx="96" cy="100" rx="8" ry="5" fill="#e6e1ff" stroke="#6a5fc4" stroke-width="2.2" stroke-dasharray="4 3"/></g>
+<g data-m="happy star"><ellipse cx="96" cy="100" rx="8" ry="5" fill="url(#qcFur)" stroke="#b5712a" stroke-width="2.2"/></g>
+</g>
+</svg>
