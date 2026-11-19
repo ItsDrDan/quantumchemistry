@@ -16,7 +16,7 @@ function load() {
     document: el(), window: {}, navigator: { userAgent: 'node' }, location: { search: '?course=1A', href: 'http://x/?course=1A' },
     localStorage: { getItem: k => store[k] || null, setItem: (k, v) => { store[k] = String(v); }, removeItem: k => { delete store[k]; } },
     matchMedia: () => ({ matches: false, addEventListener() {} }), setTimeout: () => 0, clearTimeout() {}, requestAnimationFrame: () => 0,
-    addEventListener() {}, history: { replaceState() {} }, URL, URLSearchParams, getComputedStyle: () => ({})
+    addEventListener() {}, history: { replaceState() {} }, URL, URLSearchParams, getComputedStyle: () => ({}), Image: function () {}
   };
   ctx.window = ctx; ctx.globalThis = ctx;
   vm.createContext(ctx);
